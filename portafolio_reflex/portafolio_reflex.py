@@ -2,6 +2,13 @@
 
 import reflex as rx
 
+from portafolio_reflex.Components.GithubComponent import GithubCard
+from portafolio_reflex.Components.SplineComponent import spline
+from portafolio_reflex.Components.LinkedinComponent import Linkedin
+import RIL as icons
+from reflex_qrcode import QRCode
+from reflex_motion import motion
+from reflex_calendar import calendar
 from rxconfig import config
 
 
@@ -79,6 +86,7 @@ class Header:
             align_items="center",
             justify_content="center"
         )
+        #self.float_button:FloatButton = FloatButton()
         self.theme:rx.Component() = rx.color_mode.button(_light={"color": "black"},_dark={"color":"white"})
 
     def compile_component(self)-> list:
@@ -111,17 +119,23 @@ class Main:
         titles:list = ["Software Engineer", "Data Engineer", "AI Engineer"]
         self.badge_stack_max.children = [self.create_badges(title) for title in titles]
         self.badge_stack_min.children = [self.create_badges(title) for title in titles]
+        #self.crumbs: rx.Breadcrumb = rx.breadcrum()
+        data: list = [
+            ["/github.png","Github","#"],
+            ["/linkedin.png", "Linkedin", "#"],
+            ["/mastodon.png", "Mastodon", "#"],
+        ]
+        #self.crumbs.children = [self.create_breadcrum_items(path, title, url) for path,item,url in data]
 
 
 
-
-    def create_breadcrum_items(self,path: str, title: str, url: str|None):
-        return rx.breadcrum_item(
-            rx.hstack(
-                rx.image(src=path, html_width="24px", html_height="24px", _dark={"filter": "brightness(0) invert(1)"}),
-                rx.breadcrum_link(title, href=url, _dark={"color":"rgba(255,255,255,0.7)"})
-            ),
-        )
+    # def create_breadcrum_items(self,path: str, title: str, url: str|None):
+    #     return rx.breadcrum_item(
+    #         rx.hstack(
+    #             rx.image(src=path, html_width="24px", html_height="24px", _dark={"filter": "brightness(0) invert(1)"}),
+    #             rx.breadcrum_link(title, href=url, _dark={"color":"rgba(255,255,255,0.7)"})
+    #         ),
+    #     )
 
     def create_badges(self, title: str):
         return rx.badge(
@@ -141,22 +155,60 @@ class Main:
             rx.vstack(
                 self.name,
                 self.badge_stack_max,
+                # self.crumbs,
+                # spline(
+                #     scene="https://prod.spline.design/joLpOOYbGL-10EJ4/scene.splinecode"
+                # ),
+                #Linkedin(fullname="ernestocrespo"),
+                #GithubCard("ecrespo"),
+                rx.hstack(
+                    icons.fontawesome.solid("house"),
+                    icons.simple("python"),
+                    icons.material("Search"),
+                    icons.octicons("check-circle-fill"),
+                    icons.phosphor("acorn"),
+                    icons.bootstrap("airplane"),
+                ),
+                QRCode(
+                    title="Title",
+                    value="Value"
+                ),
+                motion(
+                    rx.button(
+                        "Bounce me!",
+                    ),
+                    while_hover={"scale": 1.2},
+                    while_tap={"scale": 0.9},
+                    transition={"type": "spring", "stiffness": 400, "damping": 17},
+                ),
+                calendar(),
                 style=css.get('main').get("property")
             )
         )
-
+#"dayana-ovalle-a32508151"
     def compile_mobile_component(self):
         return rx.mobile_only(
             rx.vstack(
                 self.name,
                 self.badge_stack_min,
+                #self.crumbs,
+                # spline(
+                #     scene="https://prod.spline.design/joLpOOYbGL-10EJ4/scene.splinecode"
+                # ),
+                Linkedin(fullname="ernestocrespo"),
+                GithubCard("ecrespo"),
                 style=css.get('main').get("property")
             )
         )
 
     def build(self):
-        self.box.children = [self.compile_desktop_component(), self.compile_mobile_component()]
+        self.box.children = [self.compile_desktop_component(),] #self.compile_mobile_component()]
         return self.box
+
+
+class Footer:
+    ...
+
 
 @rx.page(route="/")
 def landing() -> rx.Component:
