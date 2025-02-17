@@ -2,9 +2,11 @@
 
 import reflex as rx
 
+from portafolio_reflex.Components.BarProgress import BarProgress
 from portafolio_reflex.Components.GithubComponent import GithubCard
 from portafolio_reflex.Components.SplineComponent import spline
 from portafolio_reflex.Components.LinkedinComponent import Linkedin
+from portafolio_reflex.Components.BarProgress import BarProgress
 import RIL as icons
 from reflex_qrcode import QRCode
 from reflex_motion import motion
@@ -169,19 +171,20 @@ class Main:
                     icons.phosphor("acorn"),
                     icons.bootstrap("airplane"),
                 ),
-                QRCode(
-                    title="Title",
-                    value="Value"
-                ),
-                motion(
-                    rx.button(
-                        "Bounce me!",
-                    ),
-                    while_hover={"scale": 1.2},
-                    while_tap={"scale": 0.9},
-                    transition={"type": "spring", "stiffness": 400, "damping": 17},
-                ),
-                calendar(),
+                # QRCode(
+                #     title="Title",
+                #     value="Value"
+                # ),
+                # motion(
+                #     rx.button(
+                #         "Bounce me!",
+                #     ),
+                #     while_hover={"scale": 1.2},
+                #     while_tap={"scale": 0.9},
+                #     transition={"type": "spring", "stiffness": 400, "damping": 17},
+                # ),
+                # calendar(),
+                #rx.hstack(BarProgress(75),BarProgress(20)),
                 style=css.get('main').get("property")
             )
         )
@@ -210,7 +213,7 @@ class Footer:
     ...
 
 
-@rx.page(route="/")
+#@rx.page(route="/")
 def landing() -> rx.Component:
     header:object = Header().build()
     main:object = Main().build()
@@ -226,5 +229,66 @@ def landing() -> rx.Component:
         background_size="25px 25px",
         style=dots,
     )
+
+@rx.page(route="/")
+def index() -> rx.Component:
+    return rx.card(
+        rx.vstack(
+            rx.center(rx.heading("Skills"),width="100%"),
+            rx.hstack(
+                rx.vstack(
+                    rx.card(
+                        rx.vstack(
+                            rx.text("Python"),
+                            BarProgress(20, "pink"),
+                        ),
+                        width="100%"
+                    ),
+                    rx.card(
+                        rx.vstack(
+                            rx.text("Linux"),
+                            BarProgress(90, "blue"),
+                        ),
+                        width="100%"
+                    ),
+                    rx.card(
+                        rx.vstack(
+                            rx.text("Pandas"),
+                            BarProgress(95, "orange"),
+                        ),
+                        width="100%"
+                    ),
+                    width="50%"
+                ),
+                rx.vstack(
+                    rx.card(
+                        rx.vstack(
+                            rx.text("Goland"),
+                            BarProgress(25, "yellow"),
+                        ),
+                        width="100%"
+                    ),
+                    rx.card(
+                        rx.vstack(
+                            rx.text("FastAPI"),
+                            BarProgress(90, "green"),
+                        ),
+                        width="100%"
+                    ),
+                    rx.card(
+                        rx.vstack(
+                            rx.text("Rust"),
+                            BarProgress(15, "brown"),
+                        ),
+                        width="100%"
+                    ),
+                    width="50%"
+                ),
+                width="100%"
+            ),
+            width="100%"
+        )
+    )
+
 
 app = rx.App(style=css.get("app"))
