@@ -70,6 +70,12 @@ css:dict = {
 
 
         }
+    },
+    "footer": {
+        "width": ["100%","90%","60%","45%","45%"],
+        "height": "50px",
+        "align_items": "center",
+        "justify_content": "center"
     }
 }
 
@@ -210,16 +216,33 @@ class Main:
 
 
 class Footer:
-    ...
+    def __init__(self):
+        self.footer: rx.Hstack = rx.hstack(style=css.get("footer"))
+        self.footer.children.append(
+            rx.text(
+                "Copyright 2020 - 2023 Seraph",
+                font_size="10px",
+                font_weight="semibold",
+
+            )
+        )
+
+    def build(self):
+        return self.footer
 
 
-#@rx.page(route="/")
+
+
+
+@rx.page(route="/")
 def landing() -> rx.Component:
     header:object = Header().build()
     main:object = Main().build()
+    footer:object = Footer().build()
     return rx.vstack(
         header,
         main,
+        footer,
         # background
         _light={
             "background":"radial-gradient(circle,rgba(0,0,0,0.35) 1px, transparent 1px)",
@@ -230,7 +253,7 @@ def landing() -> rx.Component:
         style=dots,
     )
 
-@rx.page(route="/")
+#@rx.page(route="/")
 def index() -> rx.Component:
     return rx.container(
         rx.vstack(
