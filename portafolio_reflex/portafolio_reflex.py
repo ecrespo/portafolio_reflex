@@ -135,7 +135,8 @@ class Main:
         ]
         #self.crumbs.children = [self.create_breadcrum_items(path, title, url) for path,item,url in data]
 
-
+    def create_progress_bar(self):
+        ...
 
     # def create_breadcrum_items(self,path: str, title: str, url: str|None):
     #     return rx.breadcrum_item(
@@ -253,72 +254,5 @@ def landing() -> rx.Component:
         style=dots,
     )
 
-#@rx.page(route="/")
-def index() -> rx.Component:
-    return rx.container(
-        rx.vstack(
-            rx.heading("Pruebas"),
-            rx.card(
-                rx.vstack(
-                rx.center(rx.heading("Skills"),width="100%"),
-                rx.hstack(
-                    rx.vstack(
-                        rx.card(
-                            rx.vstack(
-                                rx.text("Python"),
-                                BarProgress(20, "pink"),
-                            ),
-                            width="100%"
-                        ),
-                        rx.card(
-                            rx.vstack(
-                                rx.text("Linux"),
-                                BarProgress(90, "blue"),
-                            ),
-                            width="100%"
-                        ),
-                        rx.card(
-                            rx.vstack(
-                                rx.text("Pandas"),
-                                BarProgress(95, "orange"),
-                            ),
-                            width="100%"
-                        ),
-                        width="50%"
-                    ),
-                    rx.vstack(
-                        rx.card(
-                            rx.vstack(
-                                rx.text("Goland"),
-                                BarProgress(25, "yellow"),
-                            ),
-                            width="100%"
-                        ),
-                        rx.card(
-                            rx.vstack(
-                                rx.text("FastAPI"),
-                                BarProgress(90, "green"),
-                            ),
-                            width="100%"
-                        ),
-                        rx.card(
-                            rx.vstack(
-                                rx.text("Rust"),
-                                BarProgress(15, "brown"),
-                            ),
-                            width="100%"
-                        ),
-                        width="50%"
-                        ),
-                        width="100%"
-                    ),
-                    width="100%"
-                ),
-                width = "100%"
-            ),
-            width = "100%",
-        ),
-    width="100%"
-    )
 
 app = rx.App(style=css.get("app"))
