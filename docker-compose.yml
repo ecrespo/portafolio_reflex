@@ -1,0 +1,22 @@
+services:
+  reflex_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+#    env_file:
+#      - .env
+    environment:
+      - TZ=America/Caracas
+    container_name: reflex_app
+    ports:
+      - "9000:9000"
+      - "3000:3000"
+    networks:
+      - reflex_app
+    restart: always
+
+
+
+networks:
+  reflex_app:
+    driver: bridge
